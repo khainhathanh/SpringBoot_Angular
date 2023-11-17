@@ -1,0 +1,44 @@
+<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+
+<div [ngClass]= "{mess:message !== ''}" *ngIf= "message">
+  {{message}}
+</div>
+<div class="login" [ngSwitch]= "login">
+  <h2  [ngClass]= "{active:login === 'signin'}" (click)= "signIn()"> sign in </h2>
+  <h2  [ngClass]= "{active:login === 'signup'}" (click)= "signUp()"> sign up </h2>
+  <form *ngSwitchCase= "'signin'">
+    <input type="text" class="text" name="username" #username>
+     <span>username</span>
+    <br>  
+    <br>
+    <input type="password" class="text" name="password" #password>
+    <span>password</span>
+    <br>
+    <input type="checkbox" id="checkbox-1-1" class="custom-checkbox" />
+    <label for="checkbox-1-1">Keep me Signed in</label>
+    <button class="signin" type="button" (click) = "getUser(username.value, password.value)">
+      Sign In
+    </button>
+    <!-- <p [hidden]="message">Đăng nhập thất bại</p> -->
+    <hr>
+    <a href="#">Forgot Password?</a>
+  </form>
+
+  <form *ngSwitchCase= "'signup'">
+    <input type="text" class="text" name="username"  #username>
+     <span>username</span>
+    <br>  
+    <br>
+    <input type="password" class="text" name="password"  #password>
+    <span>password</span>
+    <br>
+    <!-- <input type="checkbox" id="checkbox-1-1" class="custom-checkbox" /> -->
+    <!-- <label for="checkbox-1-1">Keep me Signed in</label> -->
+    <button class="signin" type="button" (click) = "createUser(username.value, password.value)">
+      Sign Up
+    </button>
+    <!-- <p [hidden]="message">Đăng nhập thất bại</p> -->
+    <hr>
+    <a href="#">SignUp by Gmail?</a>
+  </form>
+</div>
