@@ -1,10 +1,12 @@
+import { MainMenu } from "./main-menu";
+
 export class ChildMenu {
     id: number;
     name: string;
-    mainId: number;
+    mainId: MainMenu;
     projectId: number;
 
-    constructor(id: number, name: string, mainid: number, projectid: number){
+    constructor(id: number, name: string, mainid: MainMenu, projectid: number){
         this.id = id;
         this.name = name;
         this.mainId = mainid;

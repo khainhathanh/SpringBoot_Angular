@@ -5,9 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 
     const meta: Meta<MenuComponent> = {
         component: MenuComponent,
-        // argTypes: {
-        //   handleClick : {action: 'clicked'},
-        // },
         decorators: [
             applicationConfig({
               providers: [

@@ -11,7 +11,6 @@ import { ChildMenu } from '../Model/child-menu';
 describe('MenuComponent', () => {
   let component: MenuComponent;
   let fixture: ComponentFixture<MenuComponent>;
-  let listMainData: Array<MainMenu>;
   let testService: HttpServerService
   let el: HTMLElement;
   beforeEach(async () => {
@@ -34,103 +33,253 @@ describe('MenuComponent', () => {
     testService = TestBed.inject(HttpServerService);
   });
 
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
   it('data MainMenu initial', async(() => {
-    component.listMainMenu = [];
-    listMainData = 
+    const menu = 
     [
       new MainMenu(1,'Dashboard',[]),
       new MainMenu(2,'Project Manager',[]),
       new MainMenu(3,'Resource Manager',[]),
       new MainMenu(4,'Account Manager',[])
     ];
-    testService.getAllMainMenu().subscribe( data=>{ 
-      let getdata: Array<MainMenu> = data;
-      getdata.forEach(element => {
-        element.child =[]
-        component.listMainMenu.push(new MainMenu(element.id,element.name,element.child))
+
+    testService.getAllMenu(component.idPrj,   component.idRole).subscribe( data=>{
+      let getData : Array<MainMenu> = data
+      getData.forEach(element => {
+        component.listMenu.push(new MainMenu(element.id,element.name,[]) )
       });
-      expect(component.listMainMenu).toEqual(listMainData);
+      expect(component.listMenu).toEqual(menu);
     })
   }));
-
+  
   it('data MainMenu with user project', async(() => {
     component.idPrj = 1;
     component.idRole = 1;
-    listMainData  = 
+
+    const menu = 
     [
-      new MainMenu(1,'Dashboard',[]),
+      new MainMenu(1,'Dashboard',[
+        {
+          id:0 ,
+          name : '', 
+          projectId: 0, 
+          mainId: {
+            id: 0,
+            name: '',
+            listChild: []
+          }
+        }
+      ]
+  ),
       new MainMenu(2,'Project Manager',[
-        {id:8, name:'Project Member',projectId: 1,mainId: 2 }
+        {
+          id: 4,
+          name: "Project Member",
+          projectId: 1,
+          mainId: {
+              id: 2,
+              name: '',
+              listChild: []
+          }
+      }
       ]),
-      new MainMenu(3,'Resource Manager',[]),
-      new MainMenu(4,'Account Manager',[])
-  ];
-  component.listChild = [];
-  testService.getAllMainMenu().subscribe( data=>{ 
-    let getdata: Array<MainMenu> = data;
-    if(component.idPrj > 0){
-      testService.getAllChildMenu(component.idPrj, component.idRole).subscribe(childData =>{
-        component.listChildMenu = childData;
-        getdata.forEach(element => {
-          component.listChildMenu.forEach(child => {
-            if(child.mainId == element.id){
-              component.listChild.push(child)
-              element.child = component.listChild
-            }else{
-              element.child =[]
-            }
-          });
-          component.listMainMenu.push(new MainMenu(element.id,element.name,element.child))
-        });
-        expect(component.listMainMenu).toEqual(listMainData);
-      })
-    }
+      new MainMenu(3,'Resource Manager',[
+        {
+          id: 0,
+          name : '', 
+          projectId: 0, 
+          mainId: {
+            id: 0,
+            name: '',
+            listChild: []
+          }
+      }
+      ]),
+      new MainMenu(4,'Account Manager',[
+        {
+          id: 0,
+          name : '', 
+          projectId: 0, 
+          mainId: {
+            id: 0,
+            name: '',
+            listChild: []
+          }
+      }
+      ])
+    ];
+
+    
+  testService.getAllMenu(component.idPrj, component.idRole).subscribe( data=>{
+    let getData : Array<MainMenu> = data
+    
+    getData.forEach(element => {
+      let getChild : Array<ChildMenu> = []
+      console.log(element.listChild)
+      element.listChild.forEach(child => {
+        
+        if(child.id == null ){
+          child.id = 0
+        }
+
+        if(child.name == null ){
+          child.name = ''
+        }
+
+        if(child.projectId == null ){
+          child.projectId = 0
+        }
+
+        if(child.mainId.id == null ){
+          child.mainId.id = 0
+        }
+
+
+        if(child.mainId.name == null ){
+          child.mainId.name = ''
+        }
+
+        if(child.mainId.listChild == null ){
+          child.mainId.listChild = []
+        }
+        getChild.push(child)
+      });
+      component.listMenu.push(new MainMenu(element.id,element.name,getChild))
+    });
+    expect(component.listMenu).toEqual(menu);
   })
   }));
 
   it('data MainMenu with admin project', async(() => {
     component.idPrj = 1;
     component.idRole = 3;
-    listMainData  = 
-    [
-      new MainMenu(1,'Dashboard',[]),
-      new MainMenu(2,'Project Manager',[
-        {id:5, name:'Check project evaluation',projectId: 1,mainId: 2 },
-        {id:6, name:'Summary of quality values',projectId: 1,mainId: 2 },
-        {id:7, name:'Quality index value',projectId: 1,mainId: 2 },
-        {id:8, name:'Project Member',projectId: 1,mainId: 2 }
-      ]),
-      new MainMenu(3,'Resource Manager',[]),
-      new MainMenu(4,'Account Manager',[])
-  ];
 
-  component.listChild = [];
-  testService.getAllMainMenu().subscribe( data=>{ 
-    let getdata: Array<MainMenu> = data;
-    if(component.idPrj > 0){
-      testService.getAllChildMenu(component.idPrj, component.idRole).subscribe(childData =>{
-        component.listChildMenu = childData;
-        getdata.forEach(element => {
-          component.listChildMenu.forEach(child => {
-            if(child.mainId == element.id){
-              component.listChild.push(child)
-              element.child = component.listChild
-            }else{
-              element.child =[]
-            }
-          });
-          component.listMainMenu.push(new MainMenu(element.id,element.name,element.child))
+  const menu = 
+    [
+      new MainMenu(1,'Dashboard',[
+        {
+          id:0 ,
+          name : '', 
+          projectId: 0, 
+          mainId: {
+            id: 0,
+            name: '',
+            listChild: []
+          }
+        }
+      ]
+  ),
+      new MainMenu(2,'Project Manager',[
+        {
+          id: 1,
+          name: "Check project evaluation",
+          projectId: 1,
+          mainId: {
+              id: 2,
+              name: '',
+              listChild: []
+          }
+      },
+      {
+          id: 2,
+          name: 'Summary of quality values',
+          projectId: 1,
+          mainId: {
+              id: 2,
+              name: '',
+              listChild: []
+          }
+      },
+      {
+          id: 3,
+          name: "Quality index value",
+          projectId: 1,
+          mainId: {
+              id: 2,
+              name: '',
+              listChild: []
+          }
+      },
+      {
+          id: 4,
+          name: "Project Member",
+          projectId: 1,
+          mainId: {
+              id: 2,
+              name: '',
+              listChild: []
+          }
+      }
+      ]),
+      new MainMenu(3,'Resource Manager',[
+        {
+          id: 0,
+          name : '', 
+          projectId: 0, 
+          mainId: {
+            id: 0,
+            name: '',
+            listChild: []
+          }
+      }
+      ]),
+      new MainMenu(4,'Account Manager',[
+        {
+          id: 0,
+          name : '', 
+          projectId: 0, 
+          mainId: {
+            id: 0,
+            name: '',
+            listChild: []
+          }
+      }
+      ])
+    ];
+
+    testService.getAllMenu(component.idPrj, component.idRole).subscribe( data=>{
+      let getData : Array<MainMenu> = data
+      
+      getData.forEach(element => {
+        let getChild : Array<ChildMenu> = []
+        console.log(element.listChild)
+        element.listChild.forEach(child => {
+          
+          if(child.id == null ){
+            child.id = 0
+          }
+  
+          if(child.name == null ){
+            child.name = ''
+          }
+  
+          if(child.projectId == null ){
+            child.projectId = 0
+          }
+  
+          if(child.mainId.id == null ){
+            child.mainId.id = 0
+          }
+  
+  
+          if(child.mainId.name == null ){
+            child.mainId.name = ''
+          }
+  
+          if(child.mainId.listChild == null ){
+            child.mainId.listChild = []
+          }
+          getChild.push(child)
         });
-        expect(component.listMainMenu).toEqual(listMainData);
-      })
-    }
-  })
-  }));
+        component.listMenu.push(new MainMenu(element.id,element.name,getChild))
+      });
+      expect(component.listMenu).toEqual(menu);
+    })
+  }
+  ));
 
 
   it('data Dashboard', (() => {

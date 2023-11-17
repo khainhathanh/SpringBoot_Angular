@@ -1,10 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { MainMenu } from '../Model/main-menu';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class HttpServerService {
   private url :any
   private REST_API_SERVER = 'http://localhost:8080';
@@ -14,13 +16,9 @@ export class HttpServerService {
       }),
   };
   constructor(private httpClient : HttpClient) { }
-  public getAllMainMenu(): Observable<any>{
-    const url = `${this.REST_API_SERVER}/mainMenu`;
-    return this.httpClient.get<any>(url,this.httpOptions)
-  }
 
-  public getAllChildMenu(idPrj:number, idRole:number): Observable<any>{
-    const url = `${this.REST_API_SERVER}/childMenu/${idPrj}/${idRole}`;
+  public getAllMenu(idPrj:number, idRole:number): Observable<Array<MainMenu>>{
+    const url = `${this.REST_API_SERVER}/menu?role=${idRole}&project=${idPrj}`;
     return this.httpClient.get<any>(url,this.httpOptions)
   }
 
@@ -29,10 +27,3 @@ export class HttpServerService {
     return this.url;
   }
 }
-    const listDataDashboard = 'http://localhost:8080/dashboard';
-    const listDataResource = 'http://localhost:8080/resource';
-    const listDataAccount = 'http://localhost:8080/account';
-    const listDataCheckProject = 'http://localhost:8080/checklist';
-    const listDataSummary = 'http://localhost:8080/summary';
-    const listDataQuality ='http://localhost:8080/quality';
-    const listDataMember = 'http://localhost:8080/member';

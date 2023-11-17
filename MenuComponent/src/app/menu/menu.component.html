@@ -1,7 +1,7 @@
 <ul class="vertical-menu">
-    <li class="dropdown" *ngFor="let mainMenu of listMainMenu" ><a (click)= 'handleClick(mainMenu.name)'>{{mainMenu.name}}</a>
+    <li class="dropdown" *ngFor="let menu of listMenu" ><a (click)= 'handleClick(menu.name)'>{{menu.name}}</a>
         <ul class="dropdown-content"> 
-            <li *ngFor="let child of mainMenu.child"><a   (click)= 'handleClick(child.name)'>{{child.name}}</a></li>
+            <li *ngFor="let child of menu.listChild"><a   (click)= 'handleClick(child.name)'>{{child.name}}</a></li>
         </ul>
     </li>
 </ul>
