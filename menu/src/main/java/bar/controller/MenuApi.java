@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import bar.entity.MainMenu;
-import bar.entity.MenuTempletRender;
 import bar.service.MenuService;
 
 @RestController

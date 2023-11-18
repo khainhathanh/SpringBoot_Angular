@@ -1,15 +1,14 @@
 package bar.service;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import bar.entity.ChildMenu;
 import bar.entity.MainMenu;
-import bar.entity.MenuTempletRender;
 import bar.repository.MainMenuRepository;
 
 @Service
@@ -18,33 +17,28 @@ public class MenuService {
 	@Autowired
 	private MainMenuRepository mainRepo;
 
-//	public List<MenuDTO> getAllMainMenu(){
-//		List<MainMenu> listMenu = mainRepo.findAll();
-//		List<MenuDTO> listMenuDTO = new ArrayList<MenuDTO>();
-//		for(MainMenu m: listMenu) {
-//			listMenuDTO.add(new MenuDTO(m));
-//		}
-//		return listMenuDTO;
-//	}
-
 	
 	public List<MainMenu> getAllChildMenu(Integer project, Integer role) {
-		List<MenuTempletRender> listMenu = mainRepo.findByIdWithNestedJoin(project, role);
+		List<Map<String,Object>> listMenu = mainRepo.findByIdWithNestedJoin(project, role);
 		List<MainMenu> listMain = new ArrayList<MainMenu>();
 		
-		for(MenuTempletRender m: listMenu) {
+		for(Map<String,Object> m: listMenu) {
 			List<ChildMenu> listChild = new ArrayList<ChildMenu>();
-			MainMenu mainMenu = new MainMenu(m.getIdmain(),m.getNamemain(),listChild);
-			ChildMenu childMenu = new ChildMenu(m.getIdchild(),m.getNamechild(),new MainMenu(m.getMainid()),m.getProjectid());
+			MainMenu mainMenu = new MainMenu((Integer) m.get("idmain"),(String)m.get("namemain"),listChild);
+			ChildMenu childMenu = new ChildMenu((Integer) m.get("idchild"),(String) m.get("namechild"),new MainMenu((Integer) m.get("mainid")),(Integer) m.get("projectid"));
 			if(!listMain.isEmpty()) {
 				for(MainMenu main: listMain) {
-					if(m.getMainid() != null && m.getMainid().equals(main.getId()) ) {
+					if(m.get("mainid") == null) {
+						mainMenu.setListChild(listChild);
+						listMain.add(mainMenu);
+						break;
+					}else if(((Integer) m.get("mainid")).equals(main.getId())) {
 						listChild = main.getListChild();
 						listChild.add(childMenu);
 						mainMenu.setListChild(listChild);
 						listMain.set(listMain.indexOf(main), mainMenu);
 						break;
-					}else if(listMain.indexOf(main)+1 != listMain.size()){
+					}else if(listMain.indexOf(main) + 1 != listMain.size()){
 						continue;
 					}else {
 						listChild.add(childMenu);
@@ -55,7 +49,9 @@ public class MenuService {
 				}
 				continue;
 			}
-			listChild.add(childMenu);
+			if(childMenu.getId() != null) {
+				listChild.add(childMenu);
+			}
 			mainMenu.setListChild(listChild);
 			listMain.add(mainMenu);
 		}
