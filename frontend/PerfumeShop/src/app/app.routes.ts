@@ -5,7 +5,7 @@ import { CartPerfumeComponent } from './component/cart-perfume/cart-perfume.comp
 import { PaymentPerfumeComponent } from './component/payment-perfume/payment-perfume.component';
 
 export const routes: Routes = [
-    { path: '', component: PaymentPerfumeComponent },
+    { path: '', component: TrangChuComponent },
     { path: 'trang-chu', component: TrangChuComponent },
     { path: 'detail-perfume', component: DetailPerfumeComponent },
     { path: 'cart-perfume', component: CartPerfumeComponent },

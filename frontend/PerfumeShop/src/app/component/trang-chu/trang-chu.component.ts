@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Route } from '@angular/router';
 
 @Component({
   selector: 'app-trang-chu',
@@ -8,5 +9,10 @@ import { Component } from '@angular/core';
   styleUrl: './trang-chu.component.css'
 })
 export class TrangChuComponent {
+  constructor (){
 
+  }
+  getDetailPerfume(){
+    // route.Navigate('/detail-perfume');
+  }
 }
