@@ -1,18 +1,22 @@
 import { Component } from '@angular/core';
-import { Route } from '@angular/router';
+import { PerfumesService } from '../../service/perfumes.service';
 
 @Component({
   selector: 'app-trang-chu',
-  standalone: true,
-  imports: [],
   templateUrl: './trang-chu.component.html',
   styleUrl: './trang-chu.component.css'
 })
 export class TrangChuComponent {
-  constructor (){
+  listPerfume : any[] = [];
+
+  constructor (private perfumeService : PerfumesService){
 
   }
+
   getDetailPerfume(){
-    // route.Navigate('/detail-perfume');
+    this.perfumeService.getAllPerfumes().subscribe((data : any[])=>{
+      this.listPerfume = data
+      console.log(this.listPerfume)
+    })
   }
 }

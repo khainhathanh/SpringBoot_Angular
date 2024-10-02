@@ -24,6 +24,7 @@ CREATE TABLE `perfume`.`users` (
   `id_perfume` INT NOT NULL AUTO_INCREMENT,
   `id_trademark` INT NULL ,
   `name` VARCHAR(45) NULL,
+  `img` VARCHAR(200) NULL,
   `description` VARCHAR(45) NULL,
   `cost` decimal(18,5) NULL,
   `gender` int NULL,
@@ -82,10 +83,10 @@ CREATE TABLE `perfume`.`admin` (
   
   CREATE TABLE `perfume`.`voschers` (
   `id_voscher` INT NOT NULL AUTO_INCREMENT,
-  `type_voscher` INT NULL ,
-  `name_voscher` int NULL,
-  `create_date` int NULL,
-  `exp_date` int NULL,
+  `type_voscher` varchar(45) NULL ,
+  `name_voscher` varchar(45) NULL,
+  `create_date` datetime NULL,
+  `exp_date` datetime NULL,
   PRIMARY KEY (`id_voscher`));
   
   CREATE TABLE `perfume`.`detail-voschers` (
@@ -110,7 +111,6 @@ CREATE TABLE `perfume`.`admin` (
   `discount` decimal(18,5) NULL,
   `gift` varchar(45) NULL,
   constraint FK_voscher_order foreign key(`id_order`) references`orders`(`id_order`),
-  constraint FK_voscher_order foreign key(`id_order`) references`orders`(`id_order`),
   PRIMARY KEY (`id_voscherorder`));
   
   CREATE TABLE `perfume`.`payments` (
@@ -133,9 +133,9 @@ CREATE TABLE `perfume`.`admin` (
   CREATE TABLE `perfume`.`gift` (
   `id_gift` INT NOT NULL AUTO_INCREMENT,
   `id_voscher` INT NULL ,
-  `name-voscher` int NULL,
+  `name-voscher` varchar(45) NULL,
   `cost` decimal(18,5) NULL,
-  `so-luong` varchar(45) NULL,
+  `so-luong` int NULL,
   constraint FK_voscher_gift foreign key(`id_voscher`) references`voschers`(`id_voscher`),
   PRIMARY KEY (`id_gift`));
   
