@@ -6,20 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import perfume.entity.User;
-import perfume.mapper.UserRowMapper;
+import perfume.entity.Perfume;
+import perfume.mapper.PerfumeRowMapper;
 
 @Repository
-public class MainMenuRepository {
+public class PerfumeRepository {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
 	@Autowired
-	private UserRowMapper userRowMapper;
+	private PerfumeRowMapper perfumeRowMapper;
 	
-	public List<User> findAll() {
-        String sql = "SELECT * FROM `my-app`.accounts";
-        return jdbcTemplate.query(sql, userRowMapper);
+	public List<Perfume> findAll() {
+        String sql = "SELECT * FROM `perfume`.perfumes";
+        return jdbcTemplate.query(sql, perfumeRowMapper);
     }
 }

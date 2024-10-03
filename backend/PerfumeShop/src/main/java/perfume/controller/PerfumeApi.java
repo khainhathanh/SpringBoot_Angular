@@ -6,19 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import perfume.entity.User;
-import perfume.service.MenuService;
+import perfume.entity.Perfume;
+import perfume.service.PerfumeService;
 
 
 @RestController
-public class MenuApi {
+public class PerfumeApi {
 	
 	@Autowired
-	private  MenuService userService;
+	private  PerfumeService perfumeService;
 	
-	@GetMapping("/users")
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+	@GetMapping("/listAllPerfumes")
+    public List<Perfume> getAllUsers() {
+        return perfumeService.listAllPerfumes();
     }
 	
 }
