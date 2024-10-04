@@ -155,3 +155,28 @@ CREATE TABLE `perfume`.`admin` (
   constraint FK_smell_perfume foreign key(`id_smell`) references`smells`(`id_smell`),
   PRIMARY KEY (`id_perfume`,`id_smell`));
   
+  
+CREATE TABLE `perfume`.`menus` (
+  `id_menu` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  PRIMARY KEY (`id_menu`));
+  
+CREATE TABLE `perfume`.`menu-childs` (
+  `id_childmenu` INT NOT NULL AUTO_INCREMENT,
+  `id_menu` INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  constraint FK_child_menu foreign key(`id_menu`) references`menus`(`id_menu`),
+  PRIMARY KEY (`id_childmenu`));
+  
+CREATE TABLE `perfume`.`role-menus` (
+  `id_menu` INT NOT NULL ,
+  `id_role` INT NULL,
+  `isChild` INT NOT NULL,
+  CONSTRAINT key_role_menu UNIQUE (`id_menu`,`id_role`,`isChild`));
+
+CREATE TABLE `perfume`.`carousel` (
+  `id_carousel` INT NOT NULL AUTO_INCREMENT,
+  `img` VARCHAR(200) NULL,
+  `alt` VARCHAR(45) NULL,
+  `active` INT NULL,
+   PRIMARY KEY (`id_carousel`));

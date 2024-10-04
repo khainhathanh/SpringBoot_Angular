@@ -1,24 +1,34 @@
 import { Component } from '@angular/core';
 import { PerfumesService } from '../../service/perfumes.service';
-import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-trang-chu',
-  standalone: true,
-  imports:[CommonModule],
   templateUrl: './trang-chu.component.html',
   styleUrl: './trang-chu.component.css'
 })
 export class TrangChuComponent {
   listPerfume : any[] = [];
+  listCarousel : any[] = [];
 
-  constructor (private perfumeService : PerfumesService){
-    this.getDetailPerfume()
+  constructor (private perfumeService : PerfumesService, private router : Router){
+    this.getAllPerfume()
+    this.getAllCarousels()
   }
 
-  getDetailPerfume(){
+  getAllPerfume(){
     this.perfumeService.getAllPerfumes().subscribe((data : any[])=>{
       this.listPerfume = data
     })
+  }
+
+  getAllCarousels(){
+    this.perfumeService.getAllCarousels().subscribe((data : any[])=>{
+      this.listCarousel = data
+    })
+  }
+
+  getDetailPerfume = ()  => {
+    this.router.navigate(['/detail-perfume']);
   }
 }

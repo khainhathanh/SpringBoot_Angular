@@ -2,12 +2,12 @@
     <div class="container mb-2">
       <div class="d-flex collapse navbar-collapse" id="navbarNav">
         <ul class="nav col-12  me-lg-auto mb-2 justify-content-between mb-md-0">
-            <li class="flex-grow-1"><a href="#" class="nav-link px-2 link-dark rounded-end">Trang Chủ</a></li>
-            <li class="flex-grow-1"><a href="#" class="nav-link px-2 link-dark rounded-end">Thương hiệu</a></li>
-            <li class="flex-grow-1"><a href="#" class="nav-link px-2 link-dark rounded-end">Nước hoa</a></li>
-            <li class="flex-grow-1"><a href="#" class="nav-link px-2 link-dark rounded-end">Kiến thức</a></li>
-            <li class="flex-grow-1"><a href="#" class="nav-link px-2 link-dark rounded-end">Blog</a></li>
-            <li class="flex-grow-1"><a href="#" class="nav-link px-2 link-dark rounded-end">Liên hệ</a></li>
+            <li *ngFor= "let menu of listMenu; index as i; first as isFirst" class="flex-grow-1 menu-item">
+              <a href="#" class="nav-link px-2 link-dark rounded-bottom">{{menu.name}}</a>
+              <div *ngIf="menu.listChild.length > 0" class="sub-menu pt-2 rounded-bottom">
+                <a *ngFor= "let child of menu.listChild; index as i; first as isFirst" href="#" class="nav-link px-2 link-dark ">{{child.name}}</a>
+              </div>
+            </li>
         </ul>
       </div>
     </div>
