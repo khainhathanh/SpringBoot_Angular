@@ -1,3 +1,4 @@
+
 CREATE DATABASE IF NOT EXISTS perfume  DEFAULT CHARACTER SET utf8 ;
 
 CREATE TABLE `perfume`.`roles` (
